@@ -8,6 +8,9 @@ import { schemaProvider } from './providers/schema.provider';
        ...connectionProvider,
        ...schemaProvider,
     ],
-    exports: [DatabaseModule],
+    exports: [
+        ...connectionProvider,
+        ...schemaProvider,
+    ],
 })
 export class DatabaseModule {}

@@ -12,7 +12,7 @@ async function bootstrap() {
   );
   const configService: ConfigService = app.get(ConfigService);
   const port   = configService.get<string>('PORT') || 3000;
-  const logger = new Logger();
+  const logger = new Logger('App start');
   app.use('/public', express.static(join(__dirname, '..', 'public')));
   app.setGlobalPrefix('api');
   await app.listen(port);
