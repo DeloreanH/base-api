@@ -1,3 +1,4 @@
 export enum modelName {
-    USER = 'User',
+    USER   = 'User',
+    SESION = 'Sesion',
 }

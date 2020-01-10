@@ -38,6 +38,21 @@ userSchema.pre<IUser>('save', async function save(next) {
     }
   });
 
-userSchema.methods.validatePassword = async function validatePassword(candidatePassword) {
-    return compare(candidatePassword, this.password);
-    };
+userSchema.methods.comparePassword = function(candidatePassword: string): Promise<boolean> {
+    const password = this.password;
+    return new Promise((resolve, reject) => {
+        compare(candidatePassword, password, (err, success) => {
+            if (err) {
+                return reject(err);
+             }
+            return resolve(success);
+        });
+    });
+};
+
+userSchema.set('toJSON', {
+    transform(doc, ret, opt) {
+        delete ret.password;
+        return ret;
+    },
+});

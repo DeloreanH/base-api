@@ -31,7 +31,8 @@ export class UserService {
         const createdUser = new this.userModel(user);
         return await createdUser.save();
     }
-    public async getUserWinks(id: string): Promise<any> {
-        return await this.userModel.findOne({_id: id}).select('_id').populate('sendedWinks').populate('receivedWinks');
-    }
+    public async findOneByEmail(email: string): Promise<IUser> {
+        return await this.userModel.findOne({email});
+      }
+
 }
