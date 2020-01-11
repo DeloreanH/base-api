@@ -1,7 +1,7 @@
 import { Schema } from 'mongoose';
-import { Tools } from 'src/common/tools/tools';
-import { genSalt, hash, compare } from 'bcrypt';
-import { IUser } from 'src/common/interfaces/interfaces';
+import { Tools } from '../../common/tools/tools';
+import { hash, compare } from 'bcrypt';
+import { IUser } from '../../common/interfaces/interfaces';
 
 export const userSchema = new Schema({
     name: {
@@ -24,19 +24,18 @@ export const userSchema = new Schema({
     },
 }, {timestamps: true});
 
-userSchema.pre<IUser>('save', async function save(next) {
-    if (!this.isModified('password')) {
-        return next();
-    }
-    const user = this;
+userSchema.pre<IUser>('save', async function(next) {
     try {
-      const salt    = await genSalt(10);
-      user.password = await hash(user.password , salt);
-      return next();
-    } catch (err) {
-      return next(err);
-    }
-  });
+        if (!this.isModified('password')) {
+          return next();
+        }
+        const hashed  = await hash(this.password, 10);
+        this.password = hashed;
+        return next();
+      } catch (err) {
+        return next(err);
+      }
+    });
 
 userSchema.methods.comparePassword = function(candidatePassword: string): Promise<boolean> {
     const password = this.password;

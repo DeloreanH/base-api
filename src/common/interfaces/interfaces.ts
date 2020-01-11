@@ -11,7 +11,7 @@ export interface IUser extends Document {
 export interface IPayload {
     exp: number;
     iat: number;
-    sub: IUser;
+    sub: {id: string};
 }
 
 export interface ISesion extends Document {
@@ -20,4 +20,9 @@ export interface ISesion extends Document {
     blacklist: boolean;
     created: Date;
     expireAt: Date;
+}
+
+export interface IAuthResponse {
+    expiresIn: string;
+    access_token: string;
 }

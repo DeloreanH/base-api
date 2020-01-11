@@ -17,7 +17,7 @@ import { AuthController } from './auth.controller';
         return {
           secret: config.get('JWT_SECRET'),
           signOptions: {
-            expiresIn: config.get('JWT_TOKEN_EXP'),
+            expiresIn: +config.get('JWT_TOKEN_EXP'),
           },
         };
       },
