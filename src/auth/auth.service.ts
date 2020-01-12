@@ -21,7 +21,7 @@ export class AuthService {
         private jwtService: JwtService,
         private config: ConfigService,
     ) {}
-    public async login(loginAttempt: LoginUserDTO) {
+    public async login(loginAttempt: LoginUserDTO): Promise<IAuthResponse> {
         const userToAttempt = await this.userService.findOneByEmail(loginAttempt.email);
         if (!userToAttempt) {
             throw new HttpException('Invalid email', HttpStatus.UNAUTHORIZED);
@@ -34,7 +34,7 @@ export class AuthService {
             throw new HttpException('Invalid password', HttpStatus.UNAUTHORIZED);
         }
     }
-    public async register(RegisterAttempt: SignUpDTO) {
+    public async register(RegisterAttempt: SignUpDTO): Promise<IAuthResponse> {
         const isMatch = await this.userService.findOneByEmail(RegisterAttempt.email);
         if (isMatch) {
             throw new HttpException('Email Already Taken', HttpStatus.BAD_REQUEST);
@@ -62,7 +62,6 @@ export class AuthService {
     public async validateUserToken( payload: IPayload, token: string ): Promise<IUser> {
         return new Promise( async (resolve, reject) => {
             try {
-                console.log(payload);
                 await this.checkBlackList(token);
                 const user = await this.userService.findById(payload.sub.id);
                 if (!user) {
