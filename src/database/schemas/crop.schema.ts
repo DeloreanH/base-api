@@ -3,6 +3,10 @@ import { modelName } from '../model-names';
 import { textureSchema } from './texture.schema';
 
 export const cropSchema = new Schema({
+    name: {
+        type: String,
+        unique: true,
+    },
     scientificName: {
         type: String,
         unique: true,
