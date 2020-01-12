@@ -9,4 +9,5 @@ export enum modelName {
     SECTOR_TEMPERATURE  = 'SectorTemperature',
     TEXTURE             = 'Texture',
     CROP                = 'Crop',
+    MONTH               = 'Month',
 }

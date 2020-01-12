@@ -7,8 +7,8 @@ export const sectorTemperatureSchema = new Schema({
         ref: modelName.SECTOR,
     },
     month: {
-        type: String,
-        unique: true,
+        type: Schema.Types.ObjectId,
+        ref: modelName.MONTH,
     },
     min: {
         type: Number,
