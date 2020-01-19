@@ -24,6 +24,7 @@ export const userSchema = new Schema({
     },
 }, {timestamps: true});
 
+/*
 userSchema.pre<IUser>('save', async function(next) {
     try {
         if (!this.isModified('password')) {
@@ -36,6 +37,7 @@ userSchema.pre<IUser>('save', async function(next) {
         return next(err);
       }
     });
+*/
 
 userSchema.methods.comparePassword = function(candidatePassword: string): Promise<boolean> {
     const password = this.password;

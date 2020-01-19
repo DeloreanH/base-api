@@ -1,6 +1,7 @@
 export enum modelName {
     USER                = 'User',
     SESION              = 'Sesion',
+    PASSWORD_RESET      = 'PasswordReset',
     WEATHER             = 'Weather',
     SECTOR              = 'Sector',
     SECTOR_HUMIDITY     = 'SectorHumidity',

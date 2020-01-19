@@ -1,15 +1,20 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
-import { LoginUserDTO } from '../common/dtos/loginUser.dto';
+import { loginUserDTO } from '../common/dtos/loginUser.dto';
 import { UserService } from '../core/services/user.service';
 import { JwtService } from '@nestjs/jwt';
-import { IUser, ISesion, IPayload, IAuthResponse } from '../common/interfaces/interfaces';
+import { IUser, ISesion, IPayload, IAuthResponse, IPasswordReset } from '../common/interfaces/interfaces';
 import { ConfigService } from '@nestjs/config';
 import { InjectModel } from '@nestjs/mongoose';
 import { modelName } from '../database/model-names';
 import { Model } from 'mongoose';
 import { sesionDTO } from '../common/dtos/sesion.dto';
-import { SignUpDTO } from '../common/dtos/signup.dto';
+import { signUpDTO } from '../common/dtos/signup.dto';
 import * as moment from 'moment';
+import { passwordResetDTO } from 'src/common/dtos/passwordReset.dto';
+import { passwordNewDTO } from 'src/common/dtos/passwordNew.dto';
+import { MailerService } from 'src/core/services/mailer.service';
+import { v1 } from 'uuid';
+import { hash } from 'bcrypt';
 
 @Injectable()
 export class AuthService {
@@ -17,11 +22,13 @@ export class AuthService {
     constructor(
         @InjectModel(modelName.SESION) private sesionModel: Model<ISesion>,
         @InjectModel(modelName.USER) private userModel: Model<IUser>,
+        @InjectModel(modelName.PASSWORD_RESET) private passwordResetModel: Model<IPasswordReset>,
         private userService: UserService,
         private jwtService: JwtService,
         private config: ConfigService,
+        private mailer: MailerService,
     ) {}
-    public async login(loginAttempt: LoginUserDTO): Promise<IAuthResponse> {
+    public async login(loginAttempt: loginUserDTO): Promise<IAuthResponse> {
         const userToAttempt = await this.userService.findOneByEmail(loginAttempt.email);
         if (!userToAttempt) {
             throw new HttpException('Invalid email', HttpStatus.UNAUTHORIZED);
@@ -34,16 +41,51 @@ export class AuthService {
             throw new HttpException('Invalid password', HttpStatus.UNAUTHORIZED);
         }
     }
-    public async register(RegisterAttempt: SignUpDTO): Promise<IAuthResponse> {
+    public async register(RegisterAttempt: signUpDTO): Promise<IAuthResponse> {
         const isMatch = await this.userService.findOneByEmail(RegisterAttempt.email);
         if (isMatch) {
             throw new HttpException('Email Already Taken', HttpStatus.BAD_REQUEST);
         } else {
-            const createdUser = new this.userModel(RegisterAttempt);
-            await createdUser.save();
-            const auth = this.createJwtPayload(createdUser);
-            await this.sesionLogger({user_id: createdUser._id, token: auth.access_token, expireAt: moment().add( this.expTime, 'seconds') });
+            const createUser    = new this.userModel(RegisterAttempt);
+            const hashed        = await hash(RegisterAttempt.password, 10);
+            createUser.password = hashed;
+            await createUser.save();
+            const auth = this.createJwtPayload(createUser);
+            await this.sesionLogger({user_id: createUser._id, token: auth.access_token, expireAt: moment().add( this.expTime, 'seconds') });
             return auth;
+        }
+    }
+    public async passwordReset(passwordResetAttempt: passwordResetDTO): Promise<any> {
+        const isMatch = await this.userService.findOneByEmail(passwordResetAttempt.email);
+        if (!isMatch) {
+            throw new HttpException('not email found', HttpStatus.BAD_REQUEST);
+        } else {
+            const uuid = v1();
+            const createPasswordReset = new this.passwordResetModel({user_id: isMatch.id, uuid , created: moment(), expireAt: moment().add(15, 'minutes') });
+            const reset = await createPasswordReset.save();
+            const emailSended = await this.mailer.sendPasswordResetLink(isMatch.email, 'localhost:4200/auth/password-reset/' + uuid);
+            return {
+                password_reset: reset,
+                email_sended: emailSended,
+            };
+        }
+    }
+
+    public async passwordNew(passwordNewAttempt: passwordNewDTO): Promise<any> {
+        const isMatch = await this.passwordResetModel.findOne({uuid: passwordNewAttempt.uuid});
+        if (!isMatch) {
+            throw new HttpException('password reset token expired', HttpStatus.BAD_REQUEST);
+        } else {
+            const user = await this.userService.findById(isMatch.user_id);
+            if (!user) {
+                throw new HttpException('not user found', HttpStatus.BAD_REQUEST);
+            } else {
+                const hashed  = await hash(passwordNewAttempt.password, 10);
+                user.password = hashed;
+                await user.save();
+                await isMatch.remove();
+                return user;
+            }
         }
     }
     public async logout( token: string ): Promise<ISesion> {

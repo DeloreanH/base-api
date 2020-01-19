@@ -26,3 +26,10 @@ export interface IAuthResponse {
     expiresIn: string;
     access_token: string;
 }
+
+export interface IPasswordReset extends Document {
+    user_id: string;
+    uuid: string;
+    created: Date;
+    expireAt: Date;
+}

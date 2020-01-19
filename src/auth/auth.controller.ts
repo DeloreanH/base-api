@@ -1,20 +1,32 @@
 import { Controller, Body, Post, Req, Res, HttpStatus, HttpException, UseGuards } from '@nestjs/common';
-import { LoginUserDTO } from '../common/dtos/loginUser.dto';
-import { SignUpDTO } from '../common/dtos/signup.dto';
+import { loginUserDTO } from '../common/dtos/loginUser.dto';
+import { signUpDTO } from '../common/dtos/signup.dto';
 import { AuthService } from './auth.service';
 import { AuthGuard } from '@nestjs/passport';
+import { passwordResetDTO } from '../common/dtos/passwordReset.dto';
+import { passwordNewDTO } from '../common/dtos/passwordNew.dto';
 
 @Controller('auth')
 export class AuthController {
     constructor(private authService: AuthService) {}
 
     @Post('login')
-    async login(@Body() loginUserDto: LoginUserDTO) {
+    async login(@Body() loginUserDto: loginUserDTO) {
         return await this.authService.login(loginUserDto);
     }
     @Post('register')
-    async register(@Body() SignUpDto: SignUpDTO) {
+    async register(@Body() SignUpDto: signUpDTO) {
         return await this.authService.register(SignUpDto);
+    }
+
+    @Post('password-reset')
+    async passwordReset(@Body() passwordResetDto: passwordResetDTO) {
+        return await this.authService.passwordReset(passwordResetDto);
+    }
+
+    @Post('password-new')
+    async passwordNew(@Body() passwordNewDto: passwordNewDTO) {
+        return await this.authService.passwordNew(passwordNewDto);
     }
     @UseGuards(AuthGuard('jwt'))
     @Post('logout')
