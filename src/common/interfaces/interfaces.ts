@@ -25,6 +25,7 @@ export interface ISesion extends Document {
 export interface IAuthResponse {
     expiresIn: string;
     access_token: string;
+    user: IUser;
 }
 
 export interface IPasswordReset extends Document {

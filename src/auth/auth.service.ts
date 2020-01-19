@@ -9,12 +9,12 @@ import { modelName } from '../database/model-names';
 import { Model } from 'mongoose';
 import { sesionDTO } from '../common/dtos/sesion.dto';
 import { signUpDTO } from '../common/dtos/signup.dto';
-import * as moment from 'moment';
 import { passwordResetDTO } from 'src/common/dtos/passwordReset.dto';
 import { passwordNewDTO } from 'src/common/dtos/passwordNew.dto';
 import { MailerService } from 'src/core/services/mailer.service';
 import { v1 } from 'uuid';
 import { hash } from 'bcrypt';
+import * as moment from 'moment';
 
 @Injectable()
 export class AuthService {
@@ -135,6 +135,7 @@ export class AuthService {
         return {
             expiresIn: this.expTime,
             access_token: token,
+            user,
         };
     }
     private async sesionLogger(sesion: sesionDTO): Promise<ISesion> {
