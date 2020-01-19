@@ -133,7 +133,7 @@ export class AuthService {
     private createJwtPayload(user: IUser): IAuthResponse {
         const token = this.jwtService.sign({sub: {id: user._id}});
         return {
-            expiresIn: this.expTime,
+            expiresIn: moment().add( this.expTime, 'seconds').unix().toString(),
             access_token: token,
             user,
         };
