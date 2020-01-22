@@ -1,6 +1,5 @@
 import { Schema } from 'mongoose';
 import { modelName } from '../model-names';
-import { textureSchema } from './texture.schema';
 
 export const sectorLocationSchema = new Schema({
     sectorId: {
@@ -14,5 +13,8 @@ export const sectorLocationSchema = new Schema({
     ASNM: {
         type: Number,
     },
-    textures: [textureSchema],
+    texturesId: {
+        type: Schema.Types.ObjectId,
+        ref: modelName.TEXTURE,
+    },
 }, {timestamps: true});

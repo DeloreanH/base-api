@@ -56,6 +56,10 @@ export const cropSchema = new Schema({
     organicMaterialPercentage: {
         type: Number,
     },
+    texturesId: {
+        type: Schema.Types.ObjectId,
+        ref: modelName.TEXTURE,
+    },
     textures: [textureSchema],
     weatherId: {
         type: Schema.Types.ObjectId,
