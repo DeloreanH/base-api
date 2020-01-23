@@ -13,7 +13,7 @@ export const sectorLocationSchema = new Schema({
     ASNM: {
         type: Number,
     },
-    texturesIds: [{
+    texturesId: [{
         type: Schema.Types.ObjectId,
         ref: modelName.TEXTURE,
     }],
