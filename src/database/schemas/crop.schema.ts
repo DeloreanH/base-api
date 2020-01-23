@@ -1,6 +1,5 @@
 import { Schema } from 'mongoose';
 import { modelName } from '../model-names';
-import { textureSchema } from './texture.schema';
 
 export const cropSchema = new Schema({
     name: {
@@ -53,14 +52,16 @@ export const cropSchema = new Schema({
     conductivityUntil: {
         type: Number,
     },
-    organicMaterialPercentage: {
+    organicMaterialMinPercentage: {
         type: Number,
     },
-    texturesId: {
+    organicMaterialMaxPercentage: {
+        type: Number,
+    },
+    texturesId: [{
         type: Schema.Types.ObjectId,
         ref: modelName.TEXTURE,
-    },
-    textures: [textureSchema],
+    }],
     weatherId: {
         type: Schema.Types.ObjectId,
         ref: modelName.WEATHER,

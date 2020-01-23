@@ -34,3 +34,34 @@ export interface IPasswordReset extends Document {
     created: Date;
     expireAt: Date;
 }
+
+export interface ITexture extends Document {
+    name: string;
+}
+
+export interface IWeather extends Document {
+    name: string;
+}
+
+export interface ICrop extends Document {
+     name: string;
+     scientificName: string;
+     phSince: number;
+     phUntil: number;
+     temperatureSince: number;
+     temperatureUntil: number;
+     altitudeSince: number;
+     altitudeUntil: number;
+     hoursSince: number;
+     hoursUntil: number;
+     typographySince: number;
+     typographyUntil: number;
+     humiditySince: number;
+     humidityUntil: number;
+     conductivitySince: number;
+     conductivityUntil: number;
+     organicMaterialMinPercentage: number;
+     organicMaterialMaxPercentage: number;
+     texturesId: string[];
+     weatherId: string;
+}
