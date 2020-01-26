@@ -22,6 +22,10 @@ export const userSchema = new Schema({
         enum : ['admin', 'basic'],
         default: 'basic',
     },
+    sysAccess: {
+        type: Boolean,
+        default: true,
+    },
 }, {timestamps: true});
 
 /*
