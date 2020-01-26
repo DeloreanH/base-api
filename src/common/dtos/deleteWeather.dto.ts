@@ -1,3 +1,3 @@
 export class deleteWeatherDTO {
-    readonly id: string;
+    readonly _id: string;
 }

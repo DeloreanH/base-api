@@ -1,3 +1,3 @@
 export class deleteTextureDTO {
-    readonly id: string;
+    readonly _id: string;
 }

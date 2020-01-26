@@ -21,7 +21,7 @@ export class TexturesService {
         return await texture.save();
     }
     public async update(updatetextureDto: updateTextureDTO): Promise<ITexture> {
-        const texture = await this.findById(updatetextureDto.id);
+        const texture = await this.findById(updatetextureDto._id);
         if (!texture) {
             throw new HttpException('texture not found', HttpStatus.BAD_REQUEST);
         } else {
@@ -30,7 +30,7 @@ export class TexturesService {
         }
     }
     public async delete(deletetextureDto: deleteTextureDTO): Promise<ITexture> {
-        const texture = await this.findById(deletetextureDto.id);
+        const texture = await this.findById(deletetextureDto._id);
         if (!texture) {
             throw new HttpException('texture not found', HttpStatus.BAD_REQUEST);
         } else {

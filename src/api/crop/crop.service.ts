@@ -21,7 +21,7 @@ export class CropService {
         return await crop.save();
     }
     public async update(updateCropDto: updateCropDTO): Promise<ICrop> {
-        const crop = await this.findById(updateCropDto.id);
+        const crop = await this.findById(updateCropDto._id);
         if (!crop) {
             throw new HttpException('crop not found', HttpStatus.BAD_REQUEST);
         } else {
@@ -49,7 +49,7 @@ export class CropService {
         }
     }
     public async delete(deleteCropDto: deleteCropDTO): Promise<ICrop> {
-        const crop = await this.findById(deleteCropDto.id);
+        const crop = await this.findById(deleteCropDto._id);
         if (!crop) {
             throw new HttpException('crop not found', HttpStatus.BAD_REQUEST);
         } else {

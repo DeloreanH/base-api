@@ -21,7 +21,7 @@ export class WeatherService {
         return await weather.save();
     }
     public async update(updateWeatherDto: updateWeatherDTO): Promise<IWeather> {
-        const weather = await this.findById(updateWeatherDto.id);
+        const weather = await this.findById(updateWeatherDto._id);
         if (!weather) {
             throw new HttpException('weather not found', HttpStatus.BAD_REQUEST);
         } else {
@@ -30,7 +30,7 @@ export class WeatherService {
         }
     }
     public async delete(deleteWeatherDto: deleteWeatherDTO): Promise<IWeather> {
-        const weather = await this.findById(deleteWeatherDto.id);
+        const weather = await this.findById(deleteWeatherDto._id);
         if (!weather) {
             throw new HttpException('weather not found', HttpStatus.BAD_REQUEST);
         } else {

@@ -1,5 +1,5 @@
 export class updateCropDTO {
-    readonly id: string;
+    readonly _id: string;
     readonly name: string;
     readonly scientificName: string;
     readonly phSince: number;

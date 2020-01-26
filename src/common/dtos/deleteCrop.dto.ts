@@ -1,3 +1,3 @@
 export class deleteCropDTO {
-    readonly id: string;
+    readonly _id: string;
 }
