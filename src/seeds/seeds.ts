@@ -1,24 +1,39 @@
 import 'dotenv/config';
 import * as mongoose from 'mongoose';
-import { ObjectId } from 'bson';
 
 // schemas
 import { modelName } from '../database/model-names';
 import { monthSchema } from '../database/schemas/month.schema';
 import { textureSchema } from '../database/schemas/texture.schema';
 import { weatherSchema } from '../database/schemas/weather.schema';
-
+import { sectorSchema } from '../database/schemas/sector.schema';
+import { sectorHumiditySchema } from '../database/schemas/sectorHumidity.schema';
+import { sectorLightSchema } from '../database/schemas/sectorLight.schema';
+import { sectorLocationSchema } from '../database/schemas/sectorLocation.schema';
+import { sectorTemperatureSchema } from '../database/schemas/sectorTemperature.schema';
+import { cropSchema } from '../database/schemas/crop.schema';
 
 // data
 import { monthSeed } from './data/month.seed';
 import { textureSeed } from './data/texture.seed';
 import { weatherSeed } from './data/weather.seed';
-
+import { sectorSeed } from './data/sector.seed';
+import { sectorHumiditySeed } from './data/sectorHumidity.seed';
+import { sectorLightSeed } from './data/sectorLight.seed';
+import { sectorLocationSeed } from './data/sectorLocation.seed';
+import { sectorTemperatureSeed } from './data/sectorTemperature.seed';
+import { CropSeed } from './data/crop.seed';
 
 // modelos
-const month   = mongoose.model(modelName.MONTH, monthSchema);
-const texture = mongoose.model(modelName.TEXTURE, textureSchema);
-const weather = mongoose.model(modelName.WEATHER, weatherSchema);
+const month              = mongoose.model(modelName.MONTH, monthSchema);
+const texture            = mongoose.model(modelName.TEXTURE, textureSchema);
+const weather            = mongoose.model(modelName.WEATHER, weatherSchema);
+const sector             = mongoose.model(modelName.SECTOR, sectorSchema);
+const sectorHumidity     = mongoose.model(modelName.SECTOR_HUMIDITY, sectorHumiditySchema);
+const sectorLight        = mongoose.model(modelName.SECTOR_LIGHT, sectorLightSchema);
+const sectorLocation     = mongoose.model(modelName.SECTOR_LOCATION, sectorLocationSchema);
+const sectorTemperature  = mongoose.model(modelName.SECTOR_TEMPERATURE, sectorTemperatureSchema);
+const crop               = mongoose.model(modelName.CROP, cropSchema);
 
 execute();
 
@@ -28,6 +43,12 @@ async  function up() {
     await month.insertMany(monthSeed);
     await texture.insertMany(textureSeed);
     await weather.insertMany(weatherSeed);
+    await sector.insertMany(sectorSeed);
+    await sectorHumidity.insertMany(sectorHumiditySeed);
+    await sectorLight.insertMany(sectorLightSeed);
+    await sectorLocation.insertMany(sectorLocationSeed);
+    await sectorTemperature.insertMany(sectorTemperatureSeed);
+    await crop.insertMany(CropSeed);
 }
 
 async function closeConn() {
