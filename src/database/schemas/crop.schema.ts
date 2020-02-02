@@ -66,4 +66,8 @@ export const cropSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: modelName.WEATHER,
     },
+    deleted: {
+        type: Boolean,
+        default: false,
+    },
 }, {timestamps: true});

@@ -6,6 +6,7 @@ import { ICrop } from '../../common/interfaces/interfaces';
 import { createCropDTO } from '../../common/dtos/createCrop.dto';
 import { updateCropDTO } from '../../common/dtos/updateCrop.dto';
 import { deleteCropDTO } from '../../common/dtos/deleteCrop.dto';
+import { restoreCropDTO } from '../../common/dtos/restoreCrop.dto';
 
 @Injectable()
 export class CropService {
@@ -14,7 +15,10 @@ export class CropService {
     ) {}
 
     public async list(): Promise<ICrop[]> {
-        return await this.cropModel.find({});
+        return await this.cropModel.find({ deleted: { $ne: true } });
+    }
+    public async listTrashed(): Promise<ICrop[]> {
+        return await this.cropModel.find({ deleted: { $ne: false } });
     }
     public async create(createCropDto: createCropDTO): Promise<ICrop> {
         const crop = new this.cropModel(createCropDto);
@@ -53,7 +57,17 @@ export class CropService {
         if (!crop) {
             throw new HttpException('crop not found', HttpStatus.BAD_REQUEST);
         } else {
-            return await crop.remove();
+            crop.deleted = true;
+            return await crop.save();
+        }
+    }
+    public async retore(restoreCropDto: restoreCropDTO): Promise<ICrop> {
+        const crop = await this.findById(restoreCropDto._id);
+        if (!crop) {
+            throw new HttpException('crop not found', HttpStatus.BAD_REQUEST);
+        } else {
+            crop.deleted = false;
+            return await crop.save();
         }
     }
     public async findById(id: string): Promise<ICrop> {

@@ -5,7 +5,7 @@ export interface IUser extends Document {
     email: string;
     password?: string;
     role: string;
-    sysAccess: boolean;
+    deleted: boolean;
     comparePassword(candidatePassword: string): Promise<boolean>;
 }
 
@@ -38,10 +38,12 @@ export interface IPasswordReset extends Document {
 
 export interface ITexture extends Document {
     name: string;
+    deleted: boolean;
 }
 
 export interface IWeather extends Document {
     name: string;
+    deleted: boolean;
 }
 
 export interface ICrop extends Document {
@@ -65,4 +67,5 @@ export interface ICrop extends Document {
      organicMaterialMaxPercentage: number;
      texturesId: string[];
      weatherId: string;
+     deleted: boolean;
 }

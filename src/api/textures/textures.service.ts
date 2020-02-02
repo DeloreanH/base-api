@@ -6,6 +6,7 @@ import { ITexture } from '../../common/interfaces/interfaces';
 import { createTextureDTO } from '../../common/dtos/createTexture.dto';
 import { updateTextureDTO } from '../../common/dtos/updateTexture.dto';
 import { deleteTextureDTO } from '../../common/dtos/deleteTexture.dto';
+import { restoreTextureDTO } from '../../common/dtos/restoreTexture.dto';
 
 @Injectable()
 export class TexturesService {
@@ -14,7 +15,10 @@ export class TexturesService {
     ) {}
 
     public async list(): Promise<ITexture[]> {
-        return await this.textureModel.find({});
+        return await this.textureModel.find({ deleted: { $ne: true } });
+    }
+    public async listTrashed(): Promise<ITexture[]> {
+        return await this.textureModel.find({ deleted: { $ne: false } });
     }
     public async create(createtextureDto: createTextureDTO): Promise<ITexture> {
         const texture = new this.textureModel(createtextureDto);
@@ -29,12 +33,22 @@ export class TexturesService {
             return await texture.save();
         }
     }
-    public async delete(deletetextureDto: deleteTextureDTO): Promise<ITexture> {
-        const texture = await this.findById(deletetextureDto._id);
+    public async delete(deleteTextureDto: deleteTextureDTO): Promise<ITexture> {
+        const texture = await this.findById(deleteTextureDto._id);
         if (!texture) {
             throw new HttpException('texture not found', HttpStatus.BAD_REQUEST);
         } else {
-            return await texture.remove();
+            texture.deleted = true;
+            return await texture.save();
+        }
+    }
+    public async restore(restoreTextureDto: restoreTextureDTO): Promise<ITexture> {
+        const texture = await this.findById(restoreTextureDto._id);
+        if (!texture) {
+            throw new HttpException('texture not found', HttpStatus.BAD_REQUEST);
+        } else {
+            texture.deleted = false;
+            return await texture.save();
         }
     }
     public async findById(id: string): Promise<ITexture> {

@@ -5,6 +5,7 @@ import { IWeather } from '../../common/interfaces/interfaces';
 import { createWeatherDTO } from '../../common/dtos/createWeather.dto';
 import { deleteWeatherDTO } from '../../common/dtos/deleteWeather.dto';
 import { updateWeatherDTO } from '../../common/dtos/updateweather.dto';
+import { restoreWeatherDTO } from '../../common/dtos/restoreWeather.dto';
 
 @Controller('weather')
 @UseGuards(AuthGuard('jwt'))
@@ -14,6 +15,10 @@ export class WeatherController {
     @Get('list')
     async list(): Promise<IWeather[]> {
         return this.weatherService.list();
+    }
+    @Get('list-trashed')
+    async listTrashed(): Promise<IWeather[]> {
+        return this.weatherService.listTrashed();
     }
     @Post('create')
     async create(@Body() createweatherDto: createWeatherDTO): Promise<IWeather> {
@@ -26,5 +31,9 @@ export class WeatherController {
     @Post('delete')
     async delete(@Body() deleteweatherDto: deleteWeatherDTO): Promise<IWeather> {
         return this.weatherService.delete(deleteweatherDto);
+    }
+    @Post('restore')
+    async restore(@Body() restoreweatherDto: restoreWeatherDTO): Promise<IWeather> {
+        return this.weatherService.restore(restoreweatherDto);
     }
 }

@@ -6,6 +6,7 @@ import { IWeather } from '../../common/interfaces/interfaces';
 import { createWeatherDTO } from '../../common/dtos/createWeather.dto';
 import { updateWeatherDTO } from '../../common/dtos/updateweather.dto';
 import { deleteWeatherDTO } from '../../common/dtos/deleteWeather.dto';
+import { restoreWeatherDTO } from '../../common/dtos/restoreWeather.dto';
 
 @Injectable()
 export class WeatherService {
@@ -14,7 +15,10 @@ export class WeatherService {
     ) {}
 
     public async list(): Promise<IWeather[]> {
-        return await this.weatherModel.find({});
+        return await this.weatherModel.find({ deleted: { $ne: true } });
+    }
+    public async listTrashed(): Promise<IWeather[]> {
+        return await this.weatherModel.find({ deleted: { $ne: false } });
     }
     public async create(createWeatherDto: createWeatherDTO): Promise<IWeather> {
         const weather = new this.weatherModel(createWeatherDto);
@@ -34,7 +38,17 @@ export class WeatherService {
         if (!weather) {
             throw new HttpException('weather not found', HttpStatus.BAD_REQUEST);
         } else {
-            return await weather.remove();
+            weather.deleted = true;
+            return await weather.save();
+        }
+    }
+    public async restore(restoreWeatherDto: restoreWeatherDTO): Promise<IWeather> {
+        const weather = await this.findById(restoreWeatherDto._id);
+        if (!weather) {
+            throw new HttpException('weather not found', HttpStatus.BAD_REQUEST);
+        } else {
+            weather.deleted = false;
+            return await weather.save();
         }
     }
     public async findById(id: string): Promise<IWeather> {
