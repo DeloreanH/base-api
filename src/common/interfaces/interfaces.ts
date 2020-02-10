@@ -69,3 +69,17 @@ export interface ICrop extends Document {
      weatherId: string;
      deleted: boolean;
 }
+
+export interface IStudy extends Document {
+    texturesId: string;
+    sectorId: string;
+    sectorLocationId: string;
+    userId: string;
+    month: number;
+    ph: number;
+    mo: number;
+    ce: number;
+    deleted: boolean;
+    createdAt: Date;
+    updatedAt: Date;
+}

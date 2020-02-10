@@ -12,6 +12,7 @@ import { sectorHumiditySchema } from '../schemas/sectorHumidity.schema';
 import { sectorLightSchema } from '../schemas/sectorLight.schema';
 import { monthSchema } from '../schemas/month.schema';
 import { passwordResetSchema } from '../schemas/passwordReset.schema';
+import { StudySchema } from '../schemas/study.schema';
 
 export const schemaProvider = [
     MongooseModule.forFeature([
@@ -27,5 +28,6 @@ export const schemaProvider = [
         { name: modelName.WEATHER, schema: weatherSchema },
         { name: modelName.MONTH, schema: monthSchema },
         { name: modelName.PASSWORD_RESET, schema: passwordResetSchema },
+        { name: modelName.STUDY, schema: StudySchema },
     ]),
   ];
