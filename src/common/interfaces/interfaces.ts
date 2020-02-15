@@ -83,3 +83,42 @@ export interface IStudy extends Document {
     createdAt: Date;
     updatedAt: Date;
 }
+export interface ILocation extends Document {
+    sectorId: string;
+    name: string;
+    ASNM: number;
+    texturesIds: string[];
+    deleted: boolean;
+    createdAt: Date;
+    updatedAt: Date;
+}
+export interface ISector extends Document {
+    name: string;
+    pendingSince: number;
+    pendingUntil: number;
+    weatherId: string;
+    sectorHumidities: ISectorHumidity[];
+    sectorLights: ISectorLight[];
+    sectorTemperatures: ISectorTemperature[];
+    deleted: boolean;
+    createdAt: Date;
+    updatedAt: Date;
+}
+export interface ISectorHumidity {
+    monthId: string;
+    min: number;
+    max: number;
+    average: number;
+}
+export interface ISectorLight {
+    monthId: string;
+    min: number;
+    max: number;
+    average: number;
+}
+export interface ISectorTemperature {
+    monthId: string;
+    min: number;
+    max: number;
+    average: number;
+}

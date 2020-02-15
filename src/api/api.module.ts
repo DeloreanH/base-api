@@ -5,6 +5,8 @@ import { CropModule } from './crop/crop.module';
 import { AdminModule } from './admin/admin.module';
 import { UsersModule } from './users/users.module';
 import { StudyModule } from './study/study.module';
+import { LocationsModule } from './locations/locations.module';
+import { SectorsModule } from './sectors/sectors.module';
 
 @Module({
     imports: [
@@ -14,6 +16,8 @@ import { StudyModule } from './study/study.module';
         AdminModule,
         UsersModule,
         StudyModule,
+        LocationsModule,
+        SectorsModule,
     ],
 })
 export class ApiModule {}

@@ -4,7 +4,7 @@ import { userSchema } from '../../database/schemas/user.schema';
 import { sesionSchema } from '../schemas/sesion.schema';
 import { cropSchema } from '../schemas/crop.schema';
 import { sectorSchema } from '../schemas/sector.schema';
-import { sectorLocationSchema } from '../schemas/sectorLocation.schema';
+import { locationSchema } from '../schemas/location.schema';
 import { sectorTemperatureSchema } from '../schemas/sectorTemperature.schema';
 import { textureSchema } from '../schemas/texture.schema';
 import { weatherSchema } from '../schemas/weather.schema';
@@ -22,12 +22,12 @@ export const schemaProvider = [
         { name: modelName.SECTOR, schema: sectorSchema },
         { name: modelName.SECTOR_HUMIDITY, schema: sectorLightSchema },
         { name: modelName.SECTOR_LIGHT, schema: sectorHumiditySchema },
-        { name: modelName.SECTOR_LOCATION, schema: sectorLocationSchema },
         { name: modelName.SECTOR_TEMPERATURE, schema: sectorTemperatureSchema },
         { name: modelName.TEXTURE, schema: textureSchema },
         { name: modelName.WEATHER, schema: weatherSchema },
         { name: modelName.MONTH, schema: monthSchema },
         { name: modelName.PASSWORD_RESET, schema: passwordResetSchema },
         { name: modelName.STUDY, schema: StudySchema },
+        { name: modelName.LOCATION, schema: locationSchema },
     ]),
   ];

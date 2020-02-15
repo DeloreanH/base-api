@@ -10,13 +10,16 @@ export const StudySchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: modelName.SECTOR,
     },
-    sectorLocationId: {
+    LocationId: {
         type: Schema.Types.ObjectId,
-        ref: modelName.SECTOR_LOCATION,
+        ref: modelName.LOCATION,
     },
     userId: {
         type: Schema.Types.ObjectId,
         ref: modelName.USER,
+    },
+    name: {
+        type: String,
     },
     month: {
         type: Number,

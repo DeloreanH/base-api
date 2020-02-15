@@ -48,7 +48,7 @@ export class CropService {
             crop.organicMaterialMinPercentage = updateCropDto.organicMaterialMinPercentage;
             crop.organicMaterialMaxPercentage = updateCropDto.organicMaterialMaxPercentage;
             crop.texturesId = updateCropDto.texturesId;
-            crop.weatherId = updateCropDto.name;
+            crop.weatherId = updateCropDto.weatherId;
             return await crop.save();
         }
     }

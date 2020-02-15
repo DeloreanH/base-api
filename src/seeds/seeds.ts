@@ -9,7 +9,6 @@ import { weatherSchema } from '../database/schemas/weather.schema';
 import { sectorSchema } from '../database/schemas/sector.schema';
 import { sectorHumiditySchema } from '../database/schemas/sectorHumidity.schema';
 import { sectorLightSchema } from '../database/schemas/sectorLight.schema';
-import { sectorLocationSchema } from '../database/schemas/sectorLocation.schema';
 import { sectorTemperatureSchema } from '../database/schemas/sectorTemperature.schema';
 import { cropSchema } from '../database/schemas/crop.schema';
 
@@ -31,7 +30,6 @@ const weather            = mongoose.model(modelName.WEATHER, weatherSchema);
 const sector             = mongoose.model(modelName.SECTOR, sectorSchema);
 const sectorHumidity     = mongoose.model(modelName.SECTOR_HUMIDITY, sectorHumiditySchema);
 const sectorLight        = mongoose.model(modelName.SECTOR_LIGHT, sectorLightSchema);
-const sectorLocation     = mongoose.model(modelName.SECTOR_LOCATION, sectorLocationSchema);
 const sectorTemperature  = mongoose.model(modelName.SECTOR_TEMPERATURE, sectorTemperatureSchema);
 const crop               = mongoose.model(modelName.CROP, cropSchema);
 
@@ -46,7 +44,6 @@ async  function up() {
     await sector.insertMany(sectorSeed);
     await sectorHumidity.insertMany(sectorHumiditySeed);
     await sectorLight.insertMany(sectorLightSeed);
-    await sectorLocation.insertMany(sectorLocationSeed);
     await sectorTemperature.insertMany(sectorTemperatureSeed);
     await crop.insertMany(CropSeed);
 }
