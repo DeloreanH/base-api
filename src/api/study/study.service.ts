@@ -34,6 +34,7 @@ export class StudyService {
             study.sectorLocationId = updateStudyDto.sectorLocationId;
             study.userId           = updateStudyDto.userId;
             study.month            = updateStudyDto.month;
+            study.name             = updateStudyDto.name;
             study.ph               = updateStudyDto.ph;
             study.mo               = updateStudyDto.mo;
             return await study.save();

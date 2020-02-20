@@ -11,34 +11,34 @@ import { createManyLocationDTO } from 'src/common/dtos/createManyLocation.dto';
 @Controller('locations')
 @UseGuards(AuthGuard('jwt'))
 export class LocationsController {
-    constructor(private Locationservice: LocationsService) {}
+    constructor(private locationservice: LocationsService) {}
 
     @Get('list')
     async list(): Promise<ILocation[]> {
-        return this.Locationservice.list();
+        return this.locationservice.list();
     }
     @Get('list-trashed')
     async listTrashed(): Promise<ILocation[]> {
-        return this.Locationservice.listTrashed();
+        return this.locationservice.listTrashed();
     }
     @Post('create')
     async create(@Body() createLocationDto: createLocationDTO ): Promise<ILocation> {
-        return this.Locationservice.create(createLocationDto);
+        return this.locationservice.create(createLocationDto);
     }
     @Post('create-many')
     async createMany(@Body() createManyLocationDto: createManyLocationDTO ): Promise<ILocation[]> {
-        return this.Locationservice.createMany(createManyLocationDto);
+        return this.locationservice.createMany(createManyLocationDto);
     }
     @Post('update')
     async update(@Body() updateLocationDto: updateLocationDTO): Promise<ILocation> {
-        return this.Locationservice.update(updateLocationDto);
+        return this.locationservice.update(updateLocationDto);
     }
     @Post('delete')
     async delete(@Body() deleteLocationDto: deleteLocationDTO): Promise<ILocation> {
-        return this.Locationservice.delete(deleteLocationDto);
+        return this.locationservice.delete(deleteLocationDto);
     }
     @Post('restore')
     async restore(@Body() restoreLocationDto: restoreLocationDTO): Promise<ILocation> {
-        return this.Locationservice.restore(restoreLocationDto);
+        return this.locationservice.restore(restoreLocationDto);
     }
 }

@@ -28,6 +28,11 @@ export interface IAuthResponse {
     access_token: string;
     user: IUser;
 }
+export interface IDocument extends Document {
+    name: string;
+    path: string;
+    cropId: string;
+}
 
 export interface IPasswordReset extends Document {
     user_id: string;
@@ -76,6 +81,7 @@ export interface IStudy extends Document {
     sectorLocationId: string;
     userId: string;
     month: number;
+    name: string;
     ph: number;
     mo: number;
     ce: number;
@@ -108,17 +114,14 @@ export interface ISectorHumidity {
     monthId: string;
     min: number;
     max: number;
-    average: number;
 }
 export interface ISectorLight {
     monthId: string;
     min: number;
     max: number;
-    average: number;
 }
 export interface ISectorTemperature {
     monthId: string;
     min: number;
     max: number;
-    average: number;
 }

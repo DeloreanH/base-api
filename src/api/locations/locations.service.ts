@@ -7,8 +7,7 @@ import { createLocationDTO } from '../../common/dtos/createLocation.dto';
 import { updateLocationDTO } from '../../common/dtos/updateLocation.dto';
 import { deleteLocationDTO } from '../../common/dtos/deleteLocation.dto';
 import { restoreLocationDTO } from '../../common/dtos/restoreLocation.dto';
-import { updateCropDTO } from 'src/common/dtos/updateCrop.dto';
-import { createManyLocationDTO } from 'src/common/dtos/createManyLocation.dto';
+import { createManyLocationDTO } from '../../common/dtos/createManyLocation.dto';
 
 @Injectable()
 export class LocationsService {

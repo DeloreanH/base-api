@@ -12,7 +12,4 @@ export const sectorHumiditySchema = new Schema({
     max: {
         type: Number,
     },
-    average: {
-        type: Number,
-    },
 });

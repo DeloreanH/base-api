@@ -12,4 +12,5 @@ export enum modelName {
     CROP                = 'Crop',
     MONTH               = 'Month',
     STUDY               = 'Study',
+    DOCUMENT            = 'Document',
 }

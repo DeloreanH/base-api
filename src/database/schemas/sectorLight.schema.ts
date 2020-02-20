@@ -12,7 +12,4 @@ export const sectorLightSchema = new Schema({
     max: {
         type: Number,
     },
-    average: {
-        type: Number,
-    },
 });

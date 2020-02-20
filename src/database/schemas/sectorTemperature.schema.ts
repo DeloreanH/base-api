@@ -12,7 +12,4 @@ export const sectorTemperatureSchema = new Schema({
     max: {
         type: Number,
     },
-    average: {
-        type: Number,
-    },
 });

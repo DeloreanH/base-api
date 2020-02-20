@@ -13,6 +13,7 @@ import { sectorLightSchema } from '../schemas/sectorLight.schema';
 import { monthSchema } from '../schemas/month.schema';
 import { passwordResetSchema } from '../schemas/passwordReset.schema';
 import { StudySchema } from '../schemas/study.schema';
+import { DocumentSchema } from '../schemas/document.schema';
 
 export const schemaProvider = [
     MongooseModule.forFeature([
@@ -29,5 +30,6 @@ export const schemaProvider = [
         { name: modelName.PASSWORD_RESET, schema: passwordResetSchema },
         { name: modelName.STUDY, schema: StudySchema },
         { name: modelName.LOCATION, schema: locationSchema },
+        { name: modelName.DOCUMENT, schema: DocumentSchema },
     ]),
   ];
