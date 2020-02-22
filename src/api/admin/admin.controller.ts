@@ -6,6 +6,7 @@ import { IUser } from '../../common/interfaces/interfaces';
 import { AdminGuard } from '../../common/guards/admin.guards.middleware';
 import { deleteUserDTO } from '../../common/dtos/deleteUser.dto';
 import { restoreUserDTO } from '../../common/dtos/restoreUser.dto';
+import { changeRolDTO } from '../../common/dtos/chagenRol.dto';
 
 @Controller('admin')
 @UseGuards(AuthGuard('jwt'), AdminGuard )
@@ -35,5 +36,9 @@ export class AdminController {
     @Post('restore-user')
     async restoreUser(@Body() restoreUserDto: restoreUserDTO): Promise<IUser> {
         return this.adminService.restoreUser(restoreUserDto);
+    }
+    @Post('change-rol')
+    async changeRol(@Body() changeRolDto: changeRolDTO): Promise<IUser> {
+        return this.adminService.changeRol(changeRolDto);
     }
 }

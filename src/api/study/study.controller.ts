@@ -6,6 +6,7 @@ import { createStudyDTO } from '../../common/dtos/createStudy.dto';
 import { updateStudyDTO } from '../../common/dtos/updateStudy.dto';
 import { deleteStudyDTO } from '../../common/dtos/deleteStudy.dto';
 import { restoreStudyDTO } from '../../common/dtos/restoreStudy.dto';
+import { AuthUserId } from 'src/auth/decorator/auth-decorators.decorator';
 
 @Controller('study')
 @UseGuards(AuthGuard('jwt'))
@@ -19,6 +20,10 @@ export class StudyController {
     @Get('list-trashed')
     async listTrashed(): Promise<IStudy[]> {
         return this.studyService.listTrashed();
+    }
+    @Get('show')
+    async show(@AuthUserId() userId): Promise<IStudy[]> {
+        return this.studyService.show(userId);
     }
     @Post('create')
     async create(@Body() createStudyDto: createStudyDTO): Promise<IStudy> {
