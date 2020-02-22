@@ -27,6 +27,9 @@ export class StudyService {
     public async show(userId: string): Promise<IStudy[]> {
         return await this.studyModel.find({ userId , deleted: { $ne: true } });
     }
+    public async showById(id: string): Promise<IStudy[]> {
+        return await this.studyModel.find({ _id: id , deleted: { $ne: true } });
+    }
     public async update(updateStudyDto: updateStudyDTO): Promise<IStudy> {
         const study = await this.findById(updateStudyDto._id);
         if (!study) {

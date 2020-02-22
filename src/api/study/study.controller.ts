@@ -1,4 +1,4 @@
-import { Controller, Body, Post, UseGuards, Get } from '@nestjs/common';
+import { Controller, Body, Post, UseGuards, Get, Param } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { IStudy } from '../../common/interfaces/interfaces';
 import { StudyService } from './study.service';
@@ -24,6 +24,10 @@ export class StudyController {
     @Get('show')
     async show(@AuthUserId() userId): Promise<IStudy[]> {
         return this.studyService.show(userId);
+    }
+    @Get('show:id')
+    async showById(@Param() id): Promise<IStudy[]> {
+        return this.studyService.showById(id);
     }
     @Post('create')
     async create(@Body() createStudyDto: createStudyDTO): Promise<IStudy> {
