@@ -1,10 +1,9 @@
-import { IsNotEmpty, IsString, IsMongoId, IsNumber } from 'class-validator';
+import { IsNotEmpty, IsNumber } from 'class-validator';
 
 export class sectorHumidityDTO {
     @IsNotEmpty()
-    @IsString()
-    @IsMongoId()
-    readonly monthId: string;
+    @IsNumber()
+    readonly month: number;
     @IsNotEmpty()
     @IsNumber()
     readonly min: number;

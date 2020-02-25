@@ -111,17 +111,17 @@ export interface ISector extends Document {
     updatedAt: Date;
 }
 export interface ISectorHumidity {
-    monthId: string;
+    month: number;
     min: number;
     max: number;
 }
 export interface ISectorLight {
-    monthId: string;
+    month: number;
     min: number;
     max: number;
 }
 export interface ISectorTemperature {
-    monthId: string;
+    month: number;
     min: number;
     max: number;
 }
