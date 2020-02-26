@@ -13,7 +13,7 @@ import { ConfigService } from '@nestjs/config';
           return setMulterOptions(
             10485760,
             config.get('DOCUMENT_UPLOAD_PATH'),
-            'jpg|jpeg|png|gif',
+            'pdf',
             );
         },
         inject: [ConfigService],
