@@ -37,7 +37,7 @@ export class StudyService {
         } else {
             study.texturesId       = updateStudyDto.texturesId;
             study.sectorId         = updateStudyDto.sectorId;
-            study.sectorLocationId = updateStudyDto.sectorLocationId;
+            study.locationId       = updateStudyDto.locationId;
             study.userId           = updateStudyDto.userId;
             study.month            = updateStudyDto.month;
             study.name             = updateStudyDto.name;

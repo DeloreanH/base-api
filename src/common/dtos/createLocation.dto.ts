@@ -2,7 +2,6 @@ import { IsMongoId, IsString, IsNotEmpty, IsNumber, IsArray } from 'class-valida
 
 export class createLocationDTO {
     @IsNotEmpty()
-    @IsString()
     @IsMongoId()
     readonly sectorId: string;
     @IsNotEmpty()

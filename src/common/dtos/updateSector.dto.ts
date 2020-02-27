@@ -5,7 +5,6 @@ import { IsNotEmpty, IsString, IsMongoId, IsNumber, IsArray } from 'class-valida
 
 export class updateSectorDTO {
     @IsNotEmpty()
-    @IsString()
     @IsMongoId()
     readonly _id: string;
     @IsNotEmpty()
@@ -18,7 +17,6 @@ export class updateSectorDTO {
     @IsNumber()
     readonly pendingUntil: number;
     @IsNotEmpty()
-    @IsString()
     @IsMongoId()
     readonly weatherId: string;
     @IsNotEmpty()

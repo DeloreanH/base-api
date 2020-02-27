@@ -1,39 +1,34 @@
-import { IsNotEmpty, IsString, IsMongoId, IsDate } from 'class-validator';
+import { IsNotEmpty, IsString, IsMongoId, IsDate, IsNumber } from 'class-validator';
 
 export class updateStudyDTO {
     @IsNotEmpty()
-    @IsString()
     @IsMongoId()
     readonly _id: string;
     @IsNotEmpty()
-    @IsString()
     @IsMongoId()
     readonly texturesId: string;
     @IsNotEmpty()
-    @IsString()
     @IsMongoId()
     readonly sectorId: string;
     @IsNotEmpty()
-    @IsString()
     @IsMongoId()
-    readonly sectorLocationId: string;
+    readonly locationId: string;
     @IsNotEmpty()
-    @IsString()
     @IsMongoId()
     readonly userId: string;
     @IsNotEmpty()
     @IsString()
     readonly name: string;
     @IsNotEmpty()
-    @IsDate()
+    @IsNumber()
     readonly month: number;
     @IsNotEmpty()
-    @IsString()
+    @IsNumber()
     readonly ph: number;
     @IsNotEmpty()
-    @IsString()
+    @IsNumber()
     readonly mo: number;
     @IsNotEmpty()
-    @IsString()
+    @IsNumber()
     readonly ce: number;
 }

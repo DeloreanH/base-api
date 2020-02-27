@@ -78,7 +78,7 @@ export interface ICrop extends Document {
 export interface IStudy extends Document {
     texturesId: string;
     sectorId: string;
-    sectorLocationId: string;
+    locationId: string;
     userId: string;
     month: number;
     name: string;

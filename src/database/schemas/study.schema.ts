@@ -10,7 +10,7 @@ export const StudySchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: modelName.SECTOR,
     },
-    LocationId: {
+    locationId: {
         type: Schema.Types.ObjectId,
         ref: modelName.LOCATION,
     },
