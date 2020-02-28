@@ -102,6 +102,7 @@ export class AuthService {
         }
     }
     public async changeProfile(changeProfileDto: changeProfileDTO, userId: string): Promise<IUser> {
+        console.log(changeProfileDto);
         const user = await this.userService.findById(userId);
         if (!user) {
             throw new HttpException('not user found', HttpStatus.BAD_REQUEST);
