@@ -21,10 +21,6 @@ export class AdminController {
     async listTrashed(): Promise<IUser[]> {
         return this.adminService.listTrashed();
     }
-    @Post('create-admin')
-    async createAdmin(@Body() createAdmin: createUserDTO): Promise<IUser> {
-        return this.adminService.createAdmin(createAdmin);
-    }
     @Post('create-user')
     async createUser(@Body() createUser: createUserDTO): Promise<IUser> {
         return this.adminService.createUser(createUser);

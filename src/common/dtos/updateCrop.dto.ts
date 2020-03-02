@@ -2,7 +2,6 @@ import { IsNotEmpty, IsString, IsMongoId, IsNumber, IsArray } from 'class-valida
 
 export class updateCropDTO {
     @IsNotEmpty()
-    @IsString()
     @IsMongoId()
     readonly _id: string;
     @IsNotEmpty()
@@ -63,7 +62,6 @@ export class updateCropDTO {
     @IsArray()
     readonly texturesId: string[];
     @IsNotEmpty()
-    @IsString()
     @IsMongoId()
     readonly weatherId: string;
 }
