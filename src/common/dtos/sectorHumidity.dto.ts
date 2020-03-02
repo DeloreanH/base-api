@@ -10,7 +10,7 @@ export class sectorHumidityDTO {
     @IsNotEmpty()
     @IsNumber()
     readonly max: number;
-    @IsNotEmpty()
-    @IsNumber()
-    readonly average: number;
+    // @IsNotEmpty()
+    // @IsNumber()
+    // readonly average: number;
 }
