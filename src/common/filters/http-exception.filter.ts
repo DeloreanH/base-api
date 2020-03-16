@@ -20,7 +20,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
         error,
         timestamp: new Date().toISOString(),
         path: request.url,
-        erroBag: exception.message.message,
+        errorBag: exception.message.message,
       });
     } else {
       response

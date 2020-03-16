@@ -17,6 +17,9 @@ export class CropService {
     public async list(): Promise<ICrop[]> {
         return await this.cropModel.find({ deleted: { $ne: true } });
     }
+    public async listWithDocument(): Promise<ICrop[]> {
+        return await this.cropModel.find({ deleted: { $ne: true } }).populate('documentId');
+    }
     public async listTrashed(): Promise<ICrop[]> {
         return await this.cropModel.find({ deleted: { $ne: false } });
     }

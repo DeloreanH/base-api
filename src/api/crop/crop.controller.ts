@@ -16,6 +16,10 @@ export class CropController {
     async list(): Promise<ICrop[]> {
         return this.cropService.list();
     }
+    @Get('list-with-documents')
+    async listWithDocuments() {
+        return this.cropService.listWithDocument();
+    }
     @Get('list-trashed')
     async listTrashed(): Promise<ICrop[]> {
         return this.cropService.listTrashed();

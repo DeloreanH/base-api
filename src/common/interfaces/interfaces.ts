@@ -68,6 +68,7 @@ export interface ICrop extends Document {
      humidityUntil: number;
      conductivitySince: number;
      conductivityUntil: number;
+     documentId: string;
      organicMaterialMinPercentage: number;
      organicMaterialMaxPercentage: number;
      texturesId: string[];

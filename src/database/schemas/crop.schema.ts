@@ -66,6 +66,10 @@ export const cropSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: modelName.WEATHER,
     },
+    documentId: {
+        type: Schema.Types.ObjectId,
+        ref: modelName.DOCUMENT,
+    },
     deleted: {
         type: Boolean,
         default: false,

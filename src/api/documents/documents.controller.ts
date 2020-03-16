@@ -23,26 +23,30 @@ export class DocumentsController {
     }
     @Post('upload')
     @UseInterceptors(FileInterceptor('document'))
-    async avatarUpload(@UploadedFile() file , @Body() uploadDocumentDto: UploadDocumentDTO, @Res() res): Promise<any>  {
+    async avatarUpload(@UploadedFile() file , @Body() uploadDocumentDto: UploadDocumentDTO): Promise<any>  {
         try {
             const document = await this.documentsService.findOneByCropId(uploadDocumentDto.cropId);
-            const link  = '/' + process.env.DOCUMENT_UPLOAD_PATH + '/' + file.filename;
+            let link: string;
             if (document) {
-                const oldFilePath = process.env.DOCUMENT_UPLOAD_PATH + '/' + document.path.split('/').pop();
-                if (existsSync(oldFilePath)) {
-                    unlinkSync(oldFilePath);
+                const match = await this.documentsService.findByName(uploadDocumentDto.name);
+                if (match  && !document._id.equals(match._id)) {
+                    throw new HttpException('Name already registered', HttpStatus.BAD_REQUEST);
                 }
-                await document.update({ name: uploadDocumentDto.name, path: link});
-                return res.status(HttpStatus.OK).json({
-                    status: 'avatar uploaded successfully',
-                    link,
-                 });
+                if (file) {
+                    const oldFilePath = process.env.DOCUMENT_UPLOAD_PATH + '/' + document.path.split('/').pop();
+                    if (existsSync(oldFilePath)) {
+                        unlinkSync(oldFilePath);
+                    }
+                    link  = '/' + process.env.DOCUMENT_UPLOAD_PATH + '/' + file.filename;
+                    document.name = uploadDocumentDto.name;
+                    document.path = link;
+                    return await document.save();
+                }
+                document.name = uploadDocumentDto.name;
+                return await document.save();
             } else {
-                await this.documentsService.create(uploadDocumentDto, link);
-                return res.status(HttpStatus.OK).json({
-                    status: 'avatar uploaded successfully',
-                    link,
-                 });
+                link  = '/' + process.env.DOCUMENT_UPLOAD_PATH + '/' + file.filename;
+                return this.documentsService.create(uploadDocumentDto, link);
             }
         } catch (error) {
             throw new HttpException(error, HttpStatus.BAD_REQUEST);
