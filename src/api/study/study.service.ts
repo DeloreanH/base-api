@@ -21,6 +21,10 @@ export class StudyService {
         return await this.studyModel.find({ deleted: { $ne: false } });
     }
     public async create(createStudyDto: createStudyDTO): Promise<IStudy> {
+        const isMatch = await this.findByName(createStudyDto.name);
+        if (isMatch) {
+            throw new HttpException('Name already registered', HttpStatus.BAD_REQUEST);
+        }
         const study = new this.studyModel(createStudyDto);
         return await study.save();
     }
@@ -35,6 +39,10 @@ export class StudyService {
         if (!study) {
             throw new HttpException('study not found', HttpStatus.BAD_REQUEST);
         } else {
+            const isMatch = await this.findByName(updateStudyDto.name);
+            if ( isMatch && !study._id.equals(isMatch._id)) {
+                throw new HttpException('Name already registered', HttpStatus.BAD_REQUEST);
+            }
             study.texturesId       = updateStudyDto.texturesId;
             study.sectorId         = updateStudyDto.sectorId;
             study.locationId       = updateStudyDto.locationId;
@@ -66,5 +74,9 @@ export class StudyService {
     }
     public async findById(id: string): Promise<IStudy> {
         return await this.studyModel.findOne({_id: id});
+    }
+    public async findByName(name: string): Promise<IStudy> {
+        const clean = name.toLowerCase();
+        return await this.studyModel.findOne({ name: clean});
     }
 }

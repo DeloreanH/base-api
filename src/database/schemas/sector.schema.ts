@@ -8,6 +8,7 @@ export const sectorSchema = new Schema({
     name: {
         type: String,
         unique: true,
+        lowercase: true,
     },
     pendingSince: {
         type: Number,

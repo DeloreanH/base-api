@@ -52,6 +52,7 @@ export class DocumentsService {
         return await this.documentModel.findOne({_id: id});
     }
     public async findByName(name: string): Promise<IDocument> {
-        return await this.documentModel.findOne({ name});
+        const clean = name.toLowerCase();
+        return await this.documentModel.findOne({ name: clean });
     }
 }

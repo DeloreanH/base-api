@@ -21,6 +21,10 @@ export class WeatherService {
         return await this.weatherModel.find({ deleted: { $ne: false } });
     }
     public async create(createWeatherDto: createWeatherDTO): Promise<IWeather> {
+        const isMatch = await this.findByName(createWeatherDto.name);
+        if (isMatch) {
+            throw new HttpException('Name already registered', HttpStatus.BAD_REQUEST);
+        }
         const weather = new this.weatherModel(createWeatherDto);
         return await weather.save();
     }
@@ -29,6 +33,10 @@ export class WeatherService {
         if (!weather) {
             throw new HttpException('weather not found', HttpStatus.BAD_REQUEST);
         } else {
+            const isMatch = await this.findByName(updateWeatherDto.name);
+            if ( isMatch && !weather._id.equals(isMatch._id)) {
+                throw new HttpException('Name already registered', HttpStatus.BAD_REQUEST);
+            }
             weather.name = updateWeatherDto.name;
             return await weather.save();
         }
@@ -53,5 +61,9 @@ export class WeatherService {
     }
     public async findById(id: string): Promise<IWeather> {
         return await this.weatherModel.findOne({_id: id});
+    }
+    public async findByName(name: string): Promise<IWeather> {
+        const clean = name.toLowerCase();
+        return await this.weatherModel.findOne({ name: clean});
     }
 }

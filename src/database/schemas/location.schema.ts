@@ -9,6 +9,7 @@ export const locationSchema = new Schema({
     name: {
         type: String,
         unique: true,
+        lowercase: true,
     },
     ASNM: {
         type: Number,

@@ -4,10 +4,12 @@ import { modelName } from '../model-names';
 export const cropSchema = new Schema({
     name: {
         type: String,
+        lowercase: true,
         unique: true,
     },
     scientificName: {
         type: String,
+        lowercase: true,
         unique: true,
     },
     phSince: {

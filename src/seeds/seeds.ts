@@ -27,11 +27,11 @@ import { CropSeed } from './data/crop.seed';
 const month              = mongoose.model(modelName.MONTH, monthSchema);
 const texture            = mongoose.model(modelName.TEXTURE, textureSchema);
 const weather            = mongoose.model(modelName.WEATHER, weatherSchema);
-const sector             = mongoose.model(modelName.SECTOR, sectorSchema);
-const sectorHumidity     = mongoose.model(modelName.SECTOR_HUMIDITY, sectorHumiditySchema);
-const sectorLight        = mongoose.model(modelName.SECTOR_LIGHT, sectorLightSchema);
-const sectorTemperature  = mongoose.model(modelName.SECTOR_TEMPERATURE, sectorTemperatureSchema);
-const crop               = mongoose.model(modelName.CROP, cropSchema);
+// const sector             = mongoose.model(modelName.SECTOR, sectorSchema);
+// const sectorHumidity     = mongoose.model(modelName.SECTOR_HUMIDITY, sectorHumiditySchema);
+// const sectorLight        = mongoose.model(modelName.SECTOR_LIGHT, sectorLightSchema);
+// const sectorTemperature  = mongoose.model(modelName.SECTOR_TEMPERATURE, sectorTemperatureSchema);
+// const crop               = mongoose.model(modelName.CROP, cropSchema);
 
 execute();
 
@@ -41,11 +41,11 @@ async  function up() {
     await month.insertMany(monthSeed);
     await texture.insertMany(textureSeed);
     await weather.insertMany(weatherSeed);
-    await sector.insertMany(sectorSeed);
-    await sectorHumidity.insertMany(sectorHumiditySeed);
-    await sectorLight.insertMany(sectorLightSeed);
-    await sectorTemperature.insertMany(sectorTemperatureSeed);
-    await crop.insertMany(CropSeed);
+    // await sector.insertMany(sectorSeed);
+    // await sectorHumidity.insertMany(sectorHumiditySeed);
+    // await sectorLight.insertMany(sectorLightSeed);
+    // await sectorTemperature.insertMany(sectorTemperatureSeed);
+    // await crop.insertMany(CropSeed);
 }
 
 async function closeConn() {

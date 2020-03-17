@@ -42,7 +42,8 @@ export class UserService {
         return await createdUser.save();
     }
     public async findOneByEmail(email: string): Promise<IUser> {
-        return await this.userModel.findOne({email});
+        const clean = email.toLowerCase().trim();
+        return await this.userModel.findOne({email: clean});
     }
     public async updateUser(updateUserDto: updateUserDTO): Promise<IUser> {
         const user = await this.findById(updateUserDto._id);

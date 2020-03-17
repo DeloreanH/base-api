@@ -8,6 +8,7 @@ export const DocumentSchema = new Schema({
     },
     name: {
         type: String,
+        lowercase: true,
         unique: true,
     },
     path: {

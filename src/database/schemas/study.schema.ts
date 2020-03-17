@@ -20,6 +20,8 @@ export const StudySchema = new Schema({
     },
     name: {
         type: String,
+        unique: true,
+        lowercase: true,
     },
     month: {
         type: Number,

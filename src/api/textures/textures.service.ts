@@ -21,6 +21,10 @@ export class TexturesService {
         return await this.textureModel.find({ deleted: { $ne: false } });
     }
     public async create(createtextureDto: createTextureDTO): Promise<ITexture> {
+        const isMatch = await this.findByName(createtextureDto.name);
+        if (isMatch) {
+            throw new HttpException('Name already registered', HttpStatus.BAD_REQUEST);
+        }
         const texture = new this.textureModel(createtextureDto);
         return await texture.save();
     }
@@ -29,6 +33,10 @@ export class TexturesService {
         if (!texture) {
             throw new HttpException('texture not found', HttpStatus.BAD_REQUEST);
         } else {
+            const isMatch = await this.findByName(updatetextureDto.name);
+            if ( isMatch && !texture._id.equals(isMatch._id)) {
+                throw new HttpException('Name already registered', HttpStatus.BAD_REQUEST);
+            }
             texture.name = updatetextureDto.name;
             return await texture.save();
         }
@@ -53,5 +61,9 @@ export class TexturesService {
     }
     public async findById(id: string): Promise<ITexture> {
         return await this.textureModel.findOne({_id: id});
+    }
+    public async findByName(name: string): Promise<ITexture> {
+        const clean = name.toLowerCase();
+        return await this.textureModel.findOne({ name: clean});
     }
 }

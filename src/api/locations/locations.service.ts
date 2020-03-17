@@ -22,6 +22,10 @@ export class LocationsService {
         return await this.locationModel.find({ deleted: { $ne: false } });
     }
     public async create(createLocationDto: createLocationDTO): Promise<ILocation> {
+        const isMatch = await this.findByName(createLocationDto.name);
+        if (isMatch) {
+            throw new HttpException('Name already registered', HttpStatus.BAD_REQUEST);
+        }
         const location = new this.locationModel(createLocationDto);
         return await location.save();
     }
@@ -33,6 +37,10 @@ export class LocationsService {
         if (!location) {
             throw new HttpException('Location not found', HttpStatus.BAD_REQUEST);
         } else {
+            const isMatch = await this.findByName(updateLocationDto.name);
+            if ( isMatch && !location._id.equals(isMatch._id)) {
+                throw new HttpException('Name already registered', HttpStatus.BAD_REQUEST);
+            }
             location.sectorId    = updateLocationDto.sectorId;
             location.name        = updateLocationDto.name;
             location.texturesIds = updateLocationDto.texturesIds;
@@ -60,5 +68,9 @@ export class LocationsService {
     }
     public async findById(id: string): Promise<ILocation> {
         return await this.locationModel.findOne({_id: id});
+    }
+    public async findByName(name: string): Promise<ILocation> {
+        const clean = name.toLowerCase();
+        return await this.locationModel.findOne({ name: clean });
     }
 }

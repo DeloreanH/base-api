@@ -24,6 +24,15 @@ export class CropService {
         return await this.cropModel.find({ deleted: { $ne: false } });
     }
     public async create(createCropDto: createCropDTO): Promise<ICrop> {
+        const isMatch = await this.findByName(createCropDto.name);
+        console.log(isMatch);
+        if (isMatch) {
+            throw new HttpException('Name already registered', HttpStatus.BAD_REQUEST);
+        }
+        const isMatch2 = await this.findByScientificName(createCropDto.scientificName);
+        if (isMatch2) {
+            throw new HttpException('ScientificName already registered', HttpStatus.BAD_REQUEST);
+        }
         const crop = new this.cropModel(createCropDto);
         return await crop.save();
     }
@@ -32,6 +41,14 @@ export class CropService {
         if (!crop) {
             throw new HttpException('crop not found', HttpStatus.BAD_REQUEST);
         } else {
+            const isMatch = await this.findByName(updateCropDto.name);
+            if ( isMatch && !crop._id.equals(isMatch._id)) {
+                throw new HttpException('Name already registered', HttpStatus.BAD_REQUEST);
+            }
+            const isMatch2 = await this.findByScientificName(updateCropDto.scientificName);
+            if ( isMatch2 && !crop._id.equals(isMatch2._id)) {
+                throw new HttpException('ScientificName already registered', HttpStatus.BAD_REQUEST);
+            }
             crop.name = updateCropDto.name;
             crop.scientificName = updateCropDto.scientificName;
             crop.phSince = updateCropDto.phSince;
@@ -75,5 +92,13 @@ export class CropService {
     }
     public async findById(id: string): Promise<ICrop> {
         return await this.cropModel.findOne({_id: id});
+    }
+    public async findByName(name: string): Promise<ICrop>  {
+        const clean = name.toLowerCase();
+        return await this.cropModel.findOne({ name: clean });
+    }
+    public async findByScientificName(name: string): Promise<ICrop>  {
+        const clean = name.toLowerCase();
+        return await this.cropModel.findOne({  scientificName: clean });
     }
 }
